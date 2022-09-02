@@ -1,5 +1,8 @@
 const arraySize = 4;
 
+bodyElement = document.getElementById("game");
+addEventListener("keyup", moveNumbers);
+
 var elements = {
   s1: document.getElementById("s1"),
   s2: document.getElementById("s2"),
@@ -75,19 +78,42 @@ function hasEmptySection() {
 }
 
 function updateElements() {
-  for (var i = 0; i < arraySize; i++) {
-    for (var j = 0; j < arraySize; j++) {  
+  for (let i = 0; i < arraySize; i++) {
+    for (let j = 0; j < arraySize; j++) {  
       if (game.currentData[i][j] != 0) {
         console.log(i,j)
-        var updatedElement = elements.array[i][j];
+        let updatedElement = elements.array[i][j];
         updatedElement.innerText = game.currentData[i][j];
+        updatedElement.classList.add('num'+game.currentData[i][j]);
       }
     }         
   }
 }
 
 game.setStartNumbers = function () {
-
+  for (let startCount = 0; startCount < 2; startCount++) {
+    game.setNewNumber();
+  }
 };
 
-game.setNewNumber();
+game.setStartNumbers();
+
+function moveNumbers(event) {
+  arrow = event.key;
+
+  switch (arrow) {
+    case 'ArrowDown':
+      alert( 'Вниз' );
+      break;
+    case 'ArrowUp':
+      alert( 'Вверх' );
+      break;
+    case 'ArrowLeft':
+      alert( 'Влево' );
+      break;
+    case 'ArrowRight':
+      alert( 'Вправо' );
+      break;
+  }
+
+}

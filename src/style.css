@@ -1,10 +1,14 @@
 :root {
     --gamefield-color: rgb(226, 211, 238);
     --section-color: rgb(246, 237, 253);
+    --main-text-color: rgb(58, 34, 80);
+
+    --background-color-num2: rgb(255, 255, 255);
 
 }
 
 * {
+    color:var(--main-text-color);
     box-sizing: border-box;
 }
 
@@ -57,6 +61,40 @@ body {
 
     border-radius: 10px;
     background-color: var(--section-color);
+}
+
+.num2 {
+    background-color: var(--background-color-num2);
+}
+.num4 {
+    background-color: var(--background-color-num2);
+}
+.num8 {
+    background-color: var(--background-color-num2);
+}
+.num16 {
+    background-color: var(--background-color-num2);
+}
+.num32 {
+    background-color: var(--background-color-num2);
+}
+.num64 {
+    background-color: var(--background-color-num2);
+}
+.num128 {
+    background-color: var(--background-color-num2);
+}
+.num256 {
+    background-color: var(--background-color-num2);
+}
+.num512 {
+    background-color: var(--background-color-num2);
+}
+.num1024 {
+    background-color: var(--background-color-num2);
+}
+.num2048 {
+    background-color: var(--background-color-num2);
 }
 
 #s1 { grid-area: 1 / 1 / 2 / 2; }
