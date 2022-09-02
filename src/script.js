@@ -66,9 +66,7 @@ game.setNewNumber = function () {
 function hasEmptySection() {
   for (var i = 0; i < arraySize; i++) {
     for (var j = 0; j < arraySize; j++) {
-      console.log(i,j)
-      console.log(game.currentData[i],[j])
-      
+
       if (game.currentData[i][j] == 0) {
         return true;
       }
@@ -81,10 +79,13 @@ function updateElements() {
   for (let i = 0; i < arraySize; i++) {
     for (let j = 0; j < arraySize; j++) {  
       if (game.currentData[i][j] != 0) {
-        console.log(i,j)
         let updatedElement = elements.array[i][j];
         updatedElement.innerText = game.currentData[i][j];
         updatedElement.classList.add('num'+game.currentData[i][j]);
+      } else {
+        let updatedElement = elements.array[i][j];
+        updatedElement.innerText = "";
+        updatedElement.classList.remove('num2');
       }
     }         
   }
@@ -109,11 +110,41 @@ function moveNumbers(event) {
       alert( 'Вверх' );
       break;
     case 'ArrowLeft':
-      alert( 'Влево' );
+      moveLeft();
       break;
     case 'ArrowRight':
       alert( 'Вправо' );
       break;
   }
 
+}
+
+function moveLeft() {
+  console.log("DO", game.currentData);
+
+  for (let i = 0; i < arraySize; i++) {
+    for (let j = 0; j < arraySize; j++) {
+      if (game.currentData[i][j] != 0) {
+        if (j > 0) {
+          if (game.currentData[i][j-1] == game.currentData[i][j]) {
+            game.currentData[i][j-1] = game.currentData[i][j-1] + game.currentData[i][j];
+            game.currentData[i][j] = game.currentData[i][j-1] - game.currentData[i][j];
+          } 
+          else if (game.currentData[i][j-1] == game.currentData[i][j] && game.currentData[i][j-1] != 0) {
+
+          }
+          else {
+            game.currentData[i][j-1] = game.currentData[i][j];
+            game.currentData[i][j] = game.currentData[i][j-1] - game.currentData[i][j];
+          }
+        }
+
+
+        // game.currentData[i][j-1] = game.currentData[i][j];
+        console.log("POSLE", game.currentData);
+      }
+    }
+    updateElements();
+  }
+  
 }
