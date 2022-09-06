@@ -1,9 +1,14 @@
 :root {
-    --gamefield-color: rgb(226, 211, 238);
+    --gamefield-color: rgb(243, 228, 255);
     --section-color: rgb(246, 237, 253);
     --main-text-color: rgb(58, 34, 80);
 
-    --background-color-num2: rgb(255, 255, 255);
+    --background-color-num2: #ffeeda;
+    --background-color-num4: #ffca8e;
+    --background-color-num8: #ee997d;
+    --background-color-num16: #D88C9A;
+    --background-color-num32: #cc7fd8;
+    --background-color-num64: #7f62d0;
 
 }
 
@@ -67,16 +72,16 @@ body {
     background-color: var(--background-color-num2);
 }
 .num4 {
-    background-color: var(--background-color-num2);
+    background-color: var(--background-color-num4);
 }
 .num8 {
-    background-color: var(--background-color-num2);
+    background-color: var(--background-color-num8);
 }
 .num16 {
-    background-color: var(--background-color-num2);
+    background-color: var(--background-color-num16);
 }
 .num32 {
-    background-color: var(--background-color-num2);
+    background-color: var(--background-color-num32);
 }
 .num64 {
     background-color: var(--background-color-num2);
