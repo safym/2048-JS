@@ -29,13 +29,13 @@ var elements = {
 }
 
 var game = {
-  currentData: [
+  Data: [
     [0, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0],
   ],
-  // currentData: [
+  // Data: [
   //   [99, 01, 02, 03],
   //   [10, 0, 12, 13],
   //   [20, 21, 22, 23],
@@ -48,9 +48,9 @@ game.setNewNumber = function () {
   var jRandom = Math.floor(Math.random() * arraySize);
 
   if (hasEmptySection()) {
-    if (game.currentData[iRandom][jRandom] == 0) {
-      game.currentData[iRandom][jRandom] = 2;
-      console.log(game.currentData);
+    if (game.Data[iRandom][jRandom] == 0) {
+      game.Data[iRandom][jRandom] = 2;
+      console.log(game.Data);
       updateElements();
       return;
     } else {
@@ -67,7 +67,7 @@ function hasEmptySection() {
   for (var i = 0; i < arraySize; i++) {
     for (var j = 0; j < arraySize; j++) {
 
-      if (game.currentData[i][j] == 0) {
+      if (game.Data[i][j] == 0) {
         return true;
       }
     }         
@@ -78,14 +78,25 @@ function hasEmptySection() {
 function updateElements() {
   for (let i = 0; i < arraySize; i++) {
     for (let j = 0; j < arraySize; j++) {  
-      if (game.currentData[i][j] != 0) {
+      if (game.Data[i][j] != 0) {
         let updatedElement = elements.array[i][j];
-        updatedElement.innerText = game.currentData[i][j];
-        updatedElement.classList.add('num'+game.currentData[i][j]);
+        updatedElement.innerText = game.Data[i][j];
+
+        updatedElement.classList.remove('num2');
+        updatedElement.classList.remove('num4');
+        updatedElement.classList.remove('num8');
+        updatedElement.classList.remove('num16');
+
+        updatedElement.classList.add('num'+game.Data[i][j]);
       } else {
         let updatedElement = elements.array[i][j];
         updatedElement.innerText = "";
+
         updatedElement.classList.remove('num2');
+        updatedElement.classList.remove('num4');
+        updatedElement.classList.remove('num8');
+        updatedElement.classList.remove('num16');
+
       }
     }         
   }
@@ -104,47 +115,83 @@ function moveNumbers(event) {
 
   switch (arrow) {
     case 'ArrowDown':
-      alert( 'Вниз' );
+      moveDown();
       break;
     case 'ArrowUp':
-      alert( 'Вверх' );
+      moveUp();
       break;
     case 'ArrowLeft':
       moveLeft();
       break;
     case 'ArrowRight':
-      alert( 'Вправо' );
+      moveRight();
       break;
   }
+
+  game.setNewNumber();
 
 }
 
 function moveLeft() {
-  console.log("DO", game.currentData);
+  console.log("LEFT BEFORE", game.Data);
 
-  for (let i = 0; i < arraySize; i++) {
-    for (let j = 0; j < arraySize; j++) {
-      if (game.currentData[i][j] != 0) {
+  for (let i = arraySize-1; i >=0; i--) {
+    for (let j = arraySize-1; j >= 0; j--) {
+      if (game.Data[i][j] != 0) {
+
         if (j > 0) {
-          if (game.currentData[i][j-1] == game.currentData[i][j]) {
-            game.currentData[i][j-1] = game.currentData[i][j-1] + game.currentData[i][j];
-            game.currentData[i][j] = game.currentData[i][j-1] - game.currentData[i][j];
+          if (game.Data[i][j-1] == game.Data[i][j]) {
+            console.log('1')
+            game.Data[i][j-1] = game.Data[i][j-1] + game.Data[i][j];
+            game.Data[i][j] = 0;
           } 
-          else if (game.currentData[i][j-1] == game.currentData[i][j] && game.currentData[i][j-1] != 0) {
-
-          }
-          else {
-            game.currentData[i][j-1] = game.currentData[i][j];
-            game.currentData[i][j] = game.currentData[i][j-1] - game.currentData[i][j];
+          else if (!(game.Data[i][j-1] != game.Data[i][j] && game.Data[i][j-1] > game.Data[i][j])) {
+            console.log('3')
+            game.Data[i][j-1] = game.Data[i][j];
+            game.Data[i][j] = game.Data[i][j-1] - game.Data[i][j];
           }
         }
-
-
-        // game.currentData[i][j-1] = game.currentData[i][j];
-        console.log("POSLE", game.currentData);
+        console.log("LEFT AFTER", game.Data);
       }
     }
     updateElements();
   }
   
+}
+
+function moveRight() {
+  console.log("RIGHT BEFORE", game.Data);
+
+  for (let i = 0; i < arraySize; i++) {
+    for (let j = 0; j < arraySize; j++) {
+
+      if (game.Data[i][j] != 0) {
+        if (j < 3) {
+          if (game.Data[i][j+1] == game.Data[i][j]) {
+            game.Data[i][j+1] = game.Data[i][j+1] + game.Data[i][j];
+            game.Data[i][j] = game.Data[i][j+1] - 2*(game.Data[i][j]);
+          } 
+          else if (!(game.Data[i][j+1] != game.Data[i][j] && game.Data[i][j+1] > game.Data[i][j])) {
+            game.Data[i][j+1] = game.Data[i][j];
+            game.Data[i][j] = game.Data[i][j+1] - game.Data[i][j];
+          }
+        }
+        console.log("RIGHT AFTER", game.Data);
+      }
+    console.log(game.Data[i][j])  
+    }
+    updateElements();
+  } 
+}
+
+function moveDown() {
+  var transposeData  = game.Data.map((el, i) => el.map((el2, j) => game.Data[j][i]));
+  console.log(transposeData)
+  // to do cycle for move down  (right of transposed matrix)
+}
+
+function moveUp() {
+  var transposeData  = game.Data.map((el, i) => el.map((el2, j) => game.Data[j][i]));
+  console.log(transposeData)
+  // to do cycle for move up  (left of transposed matrix)
 }
