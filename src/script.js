@@ -86,6 +86,12 @@ function updateElements() {
         updatedElement.classList.remove('num4');
         updatedElement.classList.remove('num8');
         updatedElement.classList.remove('num16');
+        updatedElement.classList.remove('num32');
+        updatedElement.classList.remove('num64');
+        updatedElement.classList.remove('num128');
+        updatedElement.classList.remove('num254');
+        updatedElement.classList.remove('num512');
+        updatedElement.classList.remove('num1028');
 
         updatedElement.classList.add('num'+game.Data[i][j]);
       } else {
@@ -96,7 +102,12 @@ function updateElements() {
         updatedElement.classList.remove('num4');
         updatedElement.classList.remove('num8');
         updatedElement.classList.remove('num16');
-
+        updatedElement.classList.remove('num32');
+        updatedElement.classList.remove('num64');
+        updatedElement.classList.remove('num128');
+        updatedElement.classList.remove('num254');
+        updatedElement.classList.remove('num512');
+        updatedElement.classList.remove('num1028');
       }
     }         
   }
@@ -116,20 +127,21 @@ function moveNumbers(event) {
   switch (arrow) {
     case 'ArrowDown':
       moveDown();
+      game.setNewNumber();
       break;
     case 'ArrowUp':
       moveUp();
+      game.setNewNumber();
       break;
     case 'ArrowLeft':
       moveLeft();
+      game.setNewNumber();
       break;
     case 'ArrowRight':
       moveRight();
+      game.setNewNumber();
       break;
   }
-
-  game.setNewNumber();
-
 }
 
 function moveLeft() {
@@ -187,11 +199,60 @@ function moveRight() {
 function moveDown() {
   var transposeData  = game.Data.map((el, i) => el.map((el2, j) => game.Data[j][i]));
   console.log(transposeData)
+
+  for (let i = 0; i < arraySize; i++) {
+    for (let j = 0; j < arraySize; j++) {
+
+      if (transposeData[i][j] != 0) {
+        if (j < 3) {
+          if (transposeData[i][j+1] == transposeData[i][j]) {
+            transposeData[i][j+1] = transposeData[i][j+1] + transposeData[i][j];
+            transposeData[i][j] =transposeData[i][j+1] - 2*(transposeData[i][j]);
+          } 
+          else if (!(transposeData[i][j+1] != transposeData[i][j] && transposeData[i][j+1] > transposeData[i][j])) {
+            transposeData[i][j+1] = transposeData[i][j];
+            transposeData[i][j] = transposeData[i][j+1] - transposeData[i][j];
+          }
+        }
+        // console.log("RIGHT AFTER", game.Data);
+      }
+    console.log(game.Data[i][j])  
+    }
+    game.Data = transposeData.map((el, i) => el.map((el2, j) => transposeData[j][i]));
+    updateElements();
+  } 
+
+  
   // to do cycle for move down  (right of transposed matrix)
 }
 
 function moveUp() {
   var transposeData  = game.Data.map((el, i) => el.map((el2, j) => game.Data[j][i]));
   console.log(transposeData)
+
+  for (let i = arraySize-1; i >=0; i--) {
+    for (let j = arraySize-1; j >= 0; j--) {
+      if (transposeData[i][j] != 0) {
+
+        if (j > 0) {
+          if (transposeData[i][j-1] == transposeData[i][j]) {
+            console.log('1')
+            transposeData[i][j-1] = transposeData[i][j-1] + transposeData[i][j];
+            transposeData[i][j] = 0;
+          } 
+          else if (!(transposeData[i][j-1] != transposeData[i][j] && transposeData[i][j-1] > transposeData[i][j])) {
+            console.log('3')
+            transposeData[i][j-1] = transposeData[i][j];
+            transposeData[i][j] = transposeData[i][j-1] - transposeData[i][j];
+          }
+        }
+        console.log("LEFT AFTER", transposeData);
+      }
+    }
+    game.Data = transposeData.map((el, i) => el.map((el2, j) => transposeData[j][i]));
+    updateElements();
+  }
+
+  
   // to do cycle for move up  (left of transposed matrix)
 }
