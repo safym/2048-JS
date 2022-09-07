@@ -30,10 +30,10 @@ var elements = {
 
 var game = {
   Data: [
+    [0, 0, 2, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
+    [0, 4, 2, 0],
   ],
   // Data: [
   //   [99, 01, 02, 03],
@@ -145,7 +145,15 @@ function moveNumbers(event) {
 }
 
 function moveLeft() {
-  console.log("LEFT BEFORE", game.Data);
+
+  //сделать сначала сложение всех клеток в нуправлении а потом свдиг
+
+  console.log("LEFT");
+  console.table(game.Data);
+
+  var interval = setInterval(function () {
+    
+  }, 1000)
 
   for (let i = arraySize-1; i >=0; i--) {
     for (let j = arraySize-1; j >= 0; j--) {
@@ -153,26 +161,30 @@ function moveLeft() {
 
         if (j > 0) {
           if (game.Data[i][j-1] == game.Data[i][j]) {
-            console.log('1')
+            console.log("left 1")
             game.Data[i][j-1] = game.Data[i][j-1] + game.Data[i][j];
             game.Data[i][j] = 0;
           } 
           else if (!(game.Data[i][j-1] != game.Data[i][j] && game.Data[i][j-1] > game.Data[i][j])) {
-            console.log('3')
+            console.log("left 2")
             game.Data[i][j-1] = game.Data[i][j];
             game.Data[i][j] = game.Data[i][j-1] - game.Data[i][j];
           }
         }
-        console.log("LEFT AFTER", game.Data);
+        console.table(game.Data);
       }
+      updateElements();
     }
-    updateElements();
+    // updateElements();
   }
   
 }
 
 function moveRight() {
-  console.log("RIGHT BEFORE", game.Data);
+  //сделать сначала сложение всех клеток в нуправлении а потом свдиг
+
+  console.log("RIGHT");
+  console.table(game.Data);
 
   for (let i = 0; i < arraySize; i++) {
     for (let j = 0; j < arraySize; j++) {
@@ -180,25 +192,30 @@ function moveRight() {
       if (game.Data[i][j] != 0) {
         if (j < 3) {
           if (game.Data[i][j+1] == game.Data[i][j]) {
+            console.log("right 1")
             game.Data[i][j+1] = game.Data[i][j+1] + game.Data[i][j];
             game.Data[i][j] = game.Data[i][j+1] - 2*(game.Data[i][j]);
           } 
           else if (!(game.Data[i][j+1] != game.Data[i][j] && game.Data[i][j+1] > game.Data[i][j])) {
+            console.log("right 2")
             game.Data[i][j+1] = game.Data[i][j];
             game.Data[i][j] = game.Data[i][j+1] - game.Data[i][j];
           }
         }
-        console.log("RIGHT AFTER", game.Data);
+        console.table(game.Data);
       }
-    console.log(game.Data[i][j])  
     }
     updateElements();
   } 
 }
 
 function moveDown() {
+  //сделать сначала сложение всех клеток в нуправлении а потом свдиг
+
   var transposeData  = game.Data.map((el, i) => el.map((el2, j) => game.Data[j][i]));
-  console.log(transposeData)
+
+  console.log("DOWN")
+  console.table(transposeData);
 
   for (let i = 0; i < arraySize; i++) {
     for (let j = 0; j < arraySize; j++) {
@@ -206,29 +223,31 @@ function moveDown() {
       if (transposeData[i][j] != 0) {
         if (j < 3) {
           if (transposeData[i][j+1] == transposeData[i][j]) {
+            console.log("down 1")
             transposeData[i][j+1] = transposeData[i][j+1] + transposeData[i][j];
             transposeData[i][j] =transposeData[i][j+1] - 2*(transposeData[i][j]);
           } 
           else if (!(transposeData[i][j+1] != transposeData[i][j] && transposeData[i][j+1] > transposeData[i][j])) {
+            console.log("down 2")
             transposeData[i][j+1] = transposeData[i][j];
             transposeData[i][j] = transposeData[i][j+1] - transposeData[i][j];
           }
         }
-        // console.log("RIGHT AFTER", game.Data);
+        console.table(game.Data);
       }
-    console.log(game.Data[i][j])  
     }
     game.Data = transposeData.map((el, i) => el.map((el2, j) => transposeData[j][i]));
     updateElements();
   } 
-
-  
-  // to do cycle for move down  (right of transposed matrix)
 }
 
 function moveUp() {
+  //сделать сначала сложение всех клеток в нуправлении а потом свдиг
+
   var transposeData  = game.Data.map((el, i) => el.map((el2, j) => game.Data[j][i]));
-  console.log(transposeData)
+
+  console.log("UP");
+  console.table(transposeData)
 
   for (let i = arraySize-1; i >=0; i--) {
     for (let j = arraySize-1; j >= 0; j--) {
@@ -236,23 +255,20 @@ function moveUp() {
 
         if (j > 0) {
           if (transposeData[i][j-1] == transposeData[i][j]) {
-            console.log('1')
+            console.log("up 1")
             transposeData[i][j-1] = transposeData[i][j-1] + transposeData[i][j];
             transposeData[i][j] = 0;
           } 
           else if (!(transposeData[i][j-1] != transposeData[i][j] && transposeData[i][j-1] > transposeData[i][j])) {
-            console.log('3')
+            console.log("up 2")
             transposeData[i][j-1] = transposeData[i][j];
             transposeData[i][j] = transposeData[i][j-1] - transposeData[i][j];
           }
         }
-        console.log("LEFT AFTER", transposeData);
+        console.table(transposeData)
       }
     }
     game.Data = transposeData.map((el, i) => el.map((el2, j) => transposeData[j][i]));
     updateElements();
   }
-
-  
-  // to do cycle for move up  (left of transposed matrix)
 }
