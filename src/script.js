@@ -29,12 +29,18 @@ var elements = {
 };
 
 var game = {
-      Data: [
+  Data: [
     [0, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0],
   ],
+  // Data: [
+  //   [8, 0, 8, 2],
+  //   [2, 2, 2, 2],
+  //   [0, 2, 0, 2],
+  //   [4, 0, 4, 4],
+  // ],
   //   Data: [
   //   [2, 4, 8, 16],
   //   [0, 0, 0, 32],
@@ -42,10 +48,10 @@ var game = {
   //   [1024, 512, 256, 128],
   // ],
   // Data: [
-  //   [0, 4, 2, 2],
   //   [0, 2, 2, 2],
-  //   [8, 8, 8, 16],
-  //   [8, 8, 4, 4],
+  //   [8, 0, 2, 2],
+  //   [0, 0, 2, 16],
+  //   [8, 2, 2, 4],
   // ],
   // Data: [
   //   [0, 0, 8, 8],
@@ -137,70 +143,76 @@ function moveNumbers(event) {
 }
 
 function moveLeft() {
-  console.log("LEFT");
-  console.table(game.Data);
+  var tilesArray = [];
 
-  // sum tiles of array
+  //  delete empty tiles
   for (let i = 0; i < arraySize; i++) {
-    for (let j = 0; j < arraySize; j++) {
+    var tilesRow = game.Data[i].filter(function (number) {
+      return number != 0;
+    });
+    tilesArray.push(tilesRow);
+  }
+
+  // sum tiles
+  for (let i = 0; i < tilesArray.length; i++) {
+    for (let j = 0; j < tilesArray[i].length; j++) {
       if (
-        game.Data[i][j] == game.Data[i][j + 1] &&
-        typeof game.Data[i][j + 1] != "undefined"
+        tilesArray[i][j] == tilesArray[i][j + 1] &&
+        typeof tilesArray[i][j + 1] != "undefined"
       ) {
-        game.Data[i][j] = game.Data[i][j] + game.Data[i][j + 1];
-        game.Data[i][j + 1] = 0;
+        tilesArray[i][j] = tilesArray[i][j] + tilesArray[i][j + 1];
+        tilesArray[i].splice(j + 1, 1);
       }
     }
   }
 
   //move left
   for (let i = 0; i < arraySize; i++) {
-    var tilesArray = game.Data[i].filter(function (number) {
-      return number != 0;
-    });
-
     for (let j = 0; j < arraySize; j++) {
-      while (tilesArray.length < arraySize) {
-        tilesArray.push(0);
+      while (tilesArray[i].length < arraySize) {
+        tilesArray[i].push(0);
       }
     }
-    game.Data[i] = tilesArray;
   }
 
+  game.Data = tilesArray;
   updateElements();
 }
 
 function moveRight() {
-  console.log("RIGHT");
-  console.table(game.Data);
+  var tilesArray = [];
 
-  // sum tiles of array
+  //  delete empty tiles
   for (let i = 0; i < arraySize; i++) {
-    for (let j = arraySize - 1; j >= 0; j--) {
+    var tilesRow = game.Data[i].filter(function (number) {
+      return number != 0;
+    });
+    tilesArray.push(tilesRow);
+  }
+
+  // sum tiles
+  for (let i = 0; i < tilesArray.length; i++) {
+    for (let j = tilesArray[i].length - 1; j >= 0; j--) {
       if (
-        game.Data[i][j] == game.Data[i][j - 1] &&
-        typeof game.Data[i][j - 1] != "undefined"
+        tilesArray[i][j] == tilesArray[i][j - 1] &&
+        typeof tilesArray[i][j - 1] != "undefined"
       ) {
-        game.Data[i][j] = game.Data[i][j] + game.Data[i][j - 1];
-        game.Data[i][j - 1] = 0;
+        tilesArray[i][j] = tilesArray[i][j] + tilesArray[i][j - 1];
+        tilesArray[i].splice(j - 1, 1);
       }
     }
   }
 
   //move right
   for (let i = 0; i < arraySize; i++) {
-    var tilesArray = game.Data[i].filter(function (number) {
-      return number != 0;
-    });
-
     for (let j = 0; j < arraySize; j++) {
-      while (tilesArray.length < arraySize) {
-        tilesArray.unshift(0);
+      while (tilesArray[i].length < arraySize) {
+        tilesArray[i].unshift(0);
       }
     }
-    game.Data[i] = tilesArray;
   }
 
+  game.Data = tilesArray;
   updateElements();
 }
 
@@ -209,89 +221,90 @@ function moveDown() {
     el.map((el2, j) => game.Data[j][i])
   );
 
-  console.log("DOWN");
-  console.table(transposeData);
+  var tilesArray = [];
 
-  // sum tiles of array
+  //  delete empty tiles
   for (let i = 0; i < arraySize; i++) {
-    for (let j = arraySize - 1; j >= 0; j--) {
-      if (
-        transposeData[i][j] == transposeData[i][j - 1] &&
-        typeof transposeData[i][j - 1] != "undefined"
-      ) {
-        transposeData[i][j] = transposeData[i][j] + transposeData[i][j - 1];
-        transposeData[i][j - 1] = 0;
-      }
-    }
-  }
-
-  //move down
-  for (let i = 0; i < arraySize; i++) {
-    var tilesArray = transposeData[i].filter(function (number) {
+    var tilesRow = transposeData[i].filter(function (number) {
       return number != 0;
     });
-
-    for (let j = 0; j < arraySize; j++) {
-      while (tilesArray.length < arraySize) {
-        tilesArray.unshift(0);
-      }
-    }
-    transposeData[i] = tilesArray;
+    tilesArray.push(tilesRow);
   }
 
-  game.Data = transposeData.map((el, i) =>
-    el.map((el2, j) => transposeData[j][i])
+  // sum tiles
+  for (let i = 0; i < tilesArray.length; i++) {
+    for (let j = tilesArray[i].length - 1; j >= 0; j--) {
+      if (
+        tilesArray[i][j] == tilesArray[i][j - 1] &&
+        typeof tilesArray[i][j - 1] != "undefined"
+      ) {
+        tilesArray[i][j] = tilesArray[i][j] + tilesArray[i][j - 1];
+        tilesArray[i].splice(j - 1, 1);
+      }
+    }
+  }
+
+  //move down (for transposed array: move right)
+  for (let i = 0; i < arraySize; i++) {
+    for (let j = 0; j < arraySize; j++) {
+      while (tilesArray[i].length < arraySize) {
+        tilesArray[i].unshift(0);
+      }
+    }
+  }
+
+  game.Data = tilesArray.map((el, i) =>
+    el.map((el2, j) => tilesArray[j][i])
   );
   updateElements();
 }
 
 function moveUp() {
-  //сделать сначала сложение всех клеток в нуправлении а потом свдиг
-
   var transposeData = game.Data.map((el, i) =>
     el.map((el2, j) => game.Data[j][i])
   );
 
-  console.log("UP");
-  console.table(transposeData);
+  var tilesArray = [];
 
-  // sum tiles of array
+  //  delete empty tiles
   for (let i = 0; i < arraySize; i++) {
-    for (let j = 0; j < arraySize; j++) {
-      if (
-        transposeData[i][j] == transposeData[i][j + 1] &&
-        typeof transposeData[i][j + 1] != "undefined"
-      ) {
-        transposeData[i][j] = transposeData[i][j] + transposeData[i][j + 1];
-        transposeData[i][j + 1] = 0;
-      }
-    }
-  }
-
-  //move up
-  for (let i = 0; i < arraySize; i++) {
-    var tilesArray = transposeData[i].filter(function (number) {
+    var tilesRow = transposeData[i].filter(function (number) {
       return number != 0;
     });
-
-    for (let j = 0; j < arraySize; j++) {
-      while (tilesArray.length < arraySize) {
-        tilesArray.push(0);
-      }
-    }
-    transposeData[i] = tilesArray;
+    tilesArray.push(tilesRow);
   }
 
-  game.Data = transposeData.map((el, i) =>
-    el.map((el2, j) => transposeData[j][i])
+  // sum tiles
+  for (let i = 0; i < tilesArray.length; i++) {
+    for (let j = 0; j < tilesArray[i].length; j++) {
+      if (
+        tilesArray[i][j] == tilesArray[i][j + 1] &&
+        typeof tilesArray[i][j + 1] != "undefined"
+      ) {
+        tilesArray[i][j] = tilesArray[i][j] + tilesArray[i][j + 1];
+        tilesArray[i].splice(j + 1, 1);
+      }
+    }
+  }
+
+  //move up (for transposed array: move left)
+  for (let i = 0; i < arraySize; i++) {
+    for (let j = 0; j < arraySize; j++) {
+      while (tilesArray[i].length < arraySize) {
+        tilesArray[i].push(0);
+      }
+    }
+  }
+
+  game.Data = tilesArray.map((el, i) =>
+    el.map((el2, j) => tilesArray[j][i])
   );
   updateElements();
 }
 
 
-function removeClasses(classList){
-  console.log(classList)
-  classList.forEach( className => {
+function removeClasses(classList) {
+  classList.forEach(className => {
     if (className.indexOf('num') != -1) {
       classList.remove(className)
     }
