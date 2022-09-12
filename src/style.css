@@ -3,13 +3,17 @@
     --section-color: rgb(246, 237, 253);
     --main-text-color: rgb(58, 34, 80);
 
-    --background-color-num2: #ffeeda;
+    --background-color-num2: #ffefcd;
     --background-color-num4: #ffca8e;
     --background-color-num8: #ee997d;
-    --background-color-num16: #D88C9A;
+    --background-color-num16: #e27287;
     --background-color-num32: #cc7fd8;
-    --background-color-num64: #7f62d0;
-
+    --background-color-num64: #a169e9;
+    --background-color-num128: #6664da;
+    --background-color-num256: #5086cc;
+    --background-color-num512: #50afcc;
+    --background-color-num1024: #5ad8c7;
+    --background-color-num2048: #77e7a4;
 }
 
 * {
@@ -84,22 +88,22 @@ body {
     background-color: var(--background-color-num32);
 }
 .num64 {
-    background-color: var(--background-color-num2);
+    background-color: var(--background-color-num64);
 }
 .num128 {
-    background-color: var(--background-color-num2);
+    background-color: var(--background-color-num128);
 }
 .num256 {
-    background-color: var(--background-color-num2);
+    background-color: var(--background-color-num256);
 }
 .num512 {
-    background-color: var(--background-color-num2);
+    background-color: var(--background-color-num512);
 }
 .num1024 {
-    background-color: var(--background-color-num2);
+    background-color: var(--background-color-num1024);
 }
 .num2048 {
-    background-color: var(--background-color-num2);
+    background-color: var(--background-color-num2048);
 }
 
 #s1 { grid-area: 1 / 1 / 2 / 2; }
