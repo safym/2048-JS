@@ -29,12 +29,18 @@ var elements = {
 };
 
 var game = {
-    Data: [
+      Data: [
     [0, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0],
   ],
+  //   Data: [
+  //   [2, 4, 8, 16],
+  //   [0, 0, 0, 32],
+  //   [2048, 0, 0, 64],
+  //   [1024, 512, 256, 128],
+  // ],
   // Data: [
   //   [0, 4, 2, 2],
   //   [0, 2, 2, 2],
@@ -47,6 +53,12 @@ var game = {
   //   [2, 2, 8, 4],
   //   [2, 2, 16, 4],
   // ],
+};
+
+game.setStartNumbers = function () {
+  for (let startCount = 0; startCount < 2; startCount++) {
+    game.setNewNumber();
+  }
 };
 
 game.setNewNumber = function () {
@@ -68,6 +80,8 @@ game.setNewNumber = function () {
   updateElements();
 };
 
+game.setStartNumbers();
+
 function hasEmptySection() {
   for (var i = 0; i < arraySize; i++) {
     for (var j = 0; j < arraySize; j++) {
@@ -86,44 +100,18 @@ function updateElements() {
         let updatedElement = elements.array[i][j];
         updatedElement.innerText = game.Data[i][j];
 
-        updatedElement.classList.remove("num2");
-        updatedElement.classList.remove("num4");
-        updatedElement.classList.remove("num8");
-        updatedElement.classList.remove("num16");
-        updatedElement.classList.remove("num32");
-        updatedElement.classList.remove("num64");
-        updatedElement.classList.remove("num128");
-        updatedElement.classList.remove("num254");
-        updatedElement.classList.remove("num512");
-        updatedElement.classList.remove("num1028");
+        removeClasses(updatedElement.classList);
 
         updatedElement.classList.add("num" + game.Data[i][j]);
       } else {
         let updatedElement = elements.array[i][j];
         updatedElement.innerText = "";
 
-        updatedElement.classList.remove("num2");
-        updatedElement.classList.remove("num4");
-        updatedElement.classList.remove("num8");
-        updatedElement.classList.remove("num16");
-        updatedElement.classList.remove("num32");
-        updatedElement.classList.remove("num64");
-        updatedElement.classList.remove("num128");
-        updatedElement.classList.remove("num254");
-        updatedElement.classList.remove("num512");
-        updatedElement.classList.remove("num1028");
+        removeClasses(updatedElement.classList);
       }
     }
   }
 }
-
-game.setStartNumbers = function () {
-  for (let startCount = 0; startCount < 2; startCount++) {
-    game.setNewNumber();
-  }
-};
-
-game.setStartNumbers();
 
 function moveNumbers(event) {
   arrow = event.key;
@@ -298,4 +286,14 @@ function moveUp() {
     el.map((el2, j) => transposeData[j][i])
   );
   updateElements();
+}
+
+
+function removeClasses(classList){
+  console.log(classList)
+  classList.forEach( className => {
+    if (className.indexOf('num') != -1) {
+      classList.remove(className)
+    }
+  })
 }
