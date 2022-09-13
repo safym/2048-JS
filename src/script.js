@@ -35,36 +35,23 @@ var game = {
     [0, 0, 0, 0],
     [0, 0, 0, 0],
   ],
-  // Data: [
-  //   [8, 0, 8, 2],
-  //   [2, 2, 2, 2],
-  //   [0, 2, 0, 2],
-  //   [4, 0, 4, 4],
-  // ],
-  //   Data: [
-  //   [2, 4, 8, 16],
-  //   [0, 0, 0, 32],
-  //   [2048, 0, 0, 64],
-  //   [1024, 512, 256, 128],
-  // ],
-  // Data: [
-  //   [0, 2, 2, 2],
-  //   [8, 0, 2, 2],
-  //   [0, 0, 2, 16],
-  //   [8, 2, 2, 4],
-  // ],
-  // Data: [
-  //   [0, 0, 8, 8],
-  //   [4, 2, 8, 8],
-  //   [2, 2, 8, 4],
-  //   [2, 2, 16, 4],
-  // ],
+  lastData: [
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+  ]
 };
+
+btnUndo = document.getElementById("btnUndo");
+console.log(game.lastData)
+btnUndo.addEventListener("click", function() {game.Data = game.lastData; updateElements()});
 
 game.setStartNumbers = function () {
   for (let startCount = 0; startCount < 2; startCount++) {
     game.setNewNumber();
   }
+  saveLastData();
 };
 
 game.setNewNumber = function () {
@@ -100,6 +87,7 @@ function hasEmptySection() {
 }
 
 function updateElements() {
+  
   for (let i = 0; i < arraySize; i++) {
     for (let j = 0; j < arraySize; j++) {
       if (game.Data[i][j] != 0) {
@@ -123,19 +111,23 @@ function moveNumbers(event) {
   arrow = event.key;
 
   switch (arrow) {
-    case 'ArrowDown':
+    case "ArrowDown":
+      saveLastData()
       moveDown();
       game.setNewNumber();
       break;
-    case 'ArrowUp':
+    case "ArrowUp":
+      saveLastData()
       moveUp();
       game.setNewNumber();
       break;
     case "ArrowLeft":
+      saveLastData()
       moveLeft();
       game.setNewNumber();
       break;
     case "ArrowRight":
+      saveLastData()
       moveRight();
       game.setNewNumber();
       break;
@@ -161,13 +153,19 @@ function moveLeft() {
         typeof tilesArray[i][j + 1] != "undefined"
       ) {
         tilesArray[i][j] = tilesArray[i][j] + tilesArray[i][j + 1];
-        tilesArray[i].splice(j + 1, 1);
+        tilesArray[i][j + 1] = 0;
       }
     }
   }
 
   //move left
   for (let i = 0; i < arraySize; i++) {
+    //  delete empty tiles 2
+    var tilesRow = tilesArray[i].filter(function (number) {
+      return number != 0;
+    });
+    tilesArray[i] = tilesRow;
+
     for (let j = 0; j < arraySize; j++) {
       while (tilesArray[i].length < arraySize) {
         tilesArray[i].push(0);
@@ -198,13 +196,20 @@ function moveRight() {
         typeof tilesArray[i][j - 1] != "undefined"
       ) {
         tilesArray[i][j] = tilesArray[i][j] + tilesArray[i][j - 1];
-        tilesArray[i].splice(j - 1, 1);
+        // tilesArray[i].splice(j - 1, 1);
+        tilesArray[i][j - 1] = 0;
       }
     }
   }
 
   //move right
   for (let i = 0; i < arraySize; i++) {
+    //  delete empty tiles 2
+    var tilesRow = tilesArray[i].filter(function (number) {
+      return number != 0;
+    });
+    tilesArray[i] = tilesRow;
+
     for (let j = 0; j < arraySize; j++) {
       while (tilesArray[i].length < arraySize) {
         tilesArray[i].unshift(0);
@@ -239,13 +244,20 @@ function moveDown() {
         typeof tilesArray[i][j - 1] != "undefined"
       ) {
         tilesArray[i][j] = tilesArray[i][j] + tilesArray[i][j - 1];
-        tilesArray[i].splice(j - 1, 1);
+        // tilesArray[i].splice(j - 1, 1);
+        tilesArray[i][j - 1] = 0;
       }
     }
   }
 
   //move down (for transposed array: move right)
   for (let i = 0; i < arraySize; i++) {
+    //  delete empty tiles 2
+    var tilesRow = tilesArray[i].filter(function (number) {
+      return number != 0;
+    });
+    tilesArray[i] = tilesRow;
+
     for (let j = 0; j < arraySize; j++) {
       while (tilesArray[i].length < arraySize) {
         tilesArray[i].unshift(0);
@@ -253,9 +265,7 @@ function moveDown() {
     }
   }
 
-  game.Data = tilesArray.map((el, i) =>
-    el.map((el2, j) => tilesArray[j][i])
-  );
+  game.Data = tilesArray.map((el, i) => el.map((el2, j) => tilesArray[j][i]));
   updateElements();
 }
 
@@ -282,13 +292,20 @@ function moveUp() {
         typeof tilesArray[i][j + 1] != "undefined"
       ) {
         tilesArray[i][j] = tilesArray[i][j] + tilesArray[i][j + 1];
-        tilesArray[i].splice(j + 1, 1);
+        // tilesArray[i].splice(j + 1, 1);
+        tilesArray[i][j + 1] = 0;
       }
     }
   }
 
   //move up (for transposed array: move left)
   for (let i = 0; i < arraySize; i++) {
+    //  delete empty tiles 2
+    var tilesRow = tilesArray[i].filter(function (number) {
+      return number != 0;
+    });
+    tilesArray[i] = tilesRow;
+
     for (let j = 0; j < arraySize; j++) {
       while (tilesArray[i].length < arraySize) {
         tilesArray[i].push(0);
@@ -296,17 +313,18 @@ function moveUp() {
     }
   }
 
-  game.Data = tilesArray.map((el, i) =>
-    el.map((el2, j) => tilesArray[j][i])
-  );
+  game.Data = tilesArray.map((el, i) => el.map((el2, j) => tilesArray[j][i]));
   updateElements();
 }
 
+function saveLastData() {
+  game.lastData = game.Data;
+}
 
 function removeClasses(classList) {
-  classList.forEach(className => {
-    if (className.indexOf('num') != -1) {
-      classList.remove(className)
+  classList.forEach((className) => {
+    if (className.indexOf("num") != -1) {
+      classList.remove(className);
     }
-  })
+  });
 }

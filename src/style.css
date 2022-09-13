@@ -2,6 +2,7 @@
     --gamefield-color: rgb(243, 228, 255);
     --section-color: rgb(246, 237, 253);
     --main-text-color: rgb(58, 34, 80);
+    --button-background-color: rgb(205, 171, 232);
 
     --background-color-num2: #ffefcd;
     --background-color-num4: #ffca8e;
@@ -122,3 +123,27 @@ body {
 #s14 { grid-area: 4 / 2 / 5 / 3; }
 #s15 { grid-area: 4 / 3 / 5 / 4; }
 #s16 { grid-area: 4 / 4 / 5 / 5; } 
+
+
+
+
+
+#btnUndo {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--button-background-color);
+}
+
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 1000,
+    'GRAD' 0,
+    'opsz' 48
+}
