@@ -7,15 +7,25 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
     />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
   </head>
 
   <body id="game">
     <div class="wrapper">
-      <h1 class="score">2048</h1>
-      <div class="contorls">
-        <btn id="btnUndo">
-          <span class="material-symbols-outlined"> undo </span>
-        </btn>
+      <div class="header">
+        <p>Score:</p>
+        <p id="score"></p>
+        <div class="controls">
+          <button class="styledButton" id="btnUndo">
+            <span class="material-symbols-outlined"> undo </span>
+          </button>
+          <button class="styledButton" id="btnNewGame">
+            <span class="material-symbols-outlined"> cached </span>
+          </button>
+        </div>
       </div>
 
       <div class="gamefield">

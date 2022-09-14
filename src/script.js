@@ -1,8 +1,5 @@
 const arraySize = 4;
 
-bodyElement = document.getElementById("game");
-addEventListener("keyup", moveNumbers);
-
 var elements = {
   s1: document.getElementById("s1"),
   s2: document.getElementById("s2"),
@@ -20,6 +17,9 @@ var elements = {
   s14: document.getElementById("s14"),
   s15: document.getElementById("s15"),
   s16: document.getElementById("s16"),
+  score: document.getElementById("score"),
+  btnUndo: document.getElementById("btnUndo"),
+  btnNewGame: document.getElementById("btnNewGame"),
   array: [
     [this.s1, this.s2, this.s3, this.s4],
     [this.s5, this.s6, this.s7, this.s8],
@@ -29,6 +29,8 @@ var elements = {
 };
 
 var game = {
+  score: 0,
+  lastScore: 0,
   Data: [
     [0, 0, 0, 0],
     [0, 0, 0, 0],
@@ -40,12 +42,34 @@ var game = {
     [0, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0],
-  ]
+  ],
+  undo() {
+    game.Data = game.lastData;
+    updateElements();
+  },
+  newGame() {
+    var initialArray = [
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+    ];
+    this.Data = initialArray;
+    this.lastData = initialArray;
+    this.score = 0;
+    this.lastScore = 0;
+    updateElements();
+    game.setStartNumbers();
+  },
 };
 
-btnUndo = document.getElementById("btnUndo");
-console.log(game.lastData)
-btnUndo.addEventListener("click", function() {game.Data = game.lastData; updateElements()});
+addEventListener("keyup", moveNumbers);
+elements.btnUndo.addEventListener("click", function () {
+  game.undo();
+});
+elements.btnNewGame.addEventListener("click", function () {
+  game.newGame();
+});
 
 game.setStartNumbers = function () {
   for (let startCount = 0; startCount < 2; startCount++) {
@@ -87,7 +111,8 @@ function hasEmptySection() {
 }
 
 function updateElements() {
-  
+  elements.score.innerText = game.score;
+
   for (let i = 0; i < arraySize; i++) {
     for (let j = 0; j < arraySize; j++) {
       if (game.Data[i][j] != 0) {
@@ -112,22 +137,22 @@ function moveNumbers(event) {
 
   switch (arrow) {
     case "ArrowDown":
-      saveLastData()
+      saveLastData();
       moveDown();
       game.setNewNumber();
       break;
     case "ArrowUp":
-      saveLastData()
+      saveLastData();
       moveUp();
       game.setNewNumber();
       break;
     case "ArrowLeft":
-      saveLastData()
+      saveLastData();
       moveLeft();
       game.setNewNumber();
       break;
     case "ArrowRight":
-      saveLastData()
+      saveLastData();
       moveRight();
       game.setNewNumber();
       break;
@@ -154,6 +179,8 @@ function moveLeft() {
       ) {
         tilesArray[i][j] = tilesArray[i][j] + tilesArray[i][j + 1];
         tilesArray[i][j + 1] = 0;
+
+        game.score = game.score + tilesArray[i][j];
       }
     }
   }
@@ -196,8 +223,9 @@ function moveRight() {
         typeof tilesArray[i][j - 1] != "undefined"
       ) {
         tilesArray[i][j] = tilesArray[i][j] + tilesArray[i][j - 1];
-        // tilesArray[i].splice(j - 1, 1);
         tilesArray[i][j - 1] = 0;
+
+        game.score = game.score + tilesArray[i][j];
       }
     }
   }
@@ -244,8 +272,9 @@ function moveDown() {
         typeof tilesArray[i][j - 1] != "undefined"
       ) {
         tilesArray[i][j] = tilesArray[i][j] + tilesArray[i][j - 1];
-        // tilesArray[i].splice(j - 1, 1);
         tilesArray[i][j - 1] = 0;
+
+        game.score = game.score + tilesArray[i][j];
       }
     }
   }
@@ -292,8 +321,9 @@ function moveUp() {
         typeof tilesArray[i][j + 1] != "undefined"
       ) {
         tilesArray[i][j] = tilesArray[i][j] + tilesArray[i][j + 1];
-        // tilesArray[i].splice(j + 1, 1);
         tilesArray[i][j + 1] = 0;
+
+        game.score = game.score + tilesArray[i][j];
       }
     }
   }
