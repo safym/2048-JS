@@ -40,7 +40,7 @@ var game = {
   ],
   lastData: [
     [0, 0, 0, 0],
-    [0, 0, 0, 0],
+    [0, 2, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0],
   ],
@@ -71,25 +71,7 @@ elements.btnUndo.addEventListener("click", function () {
 elements.btnNewGame.addEventListener("click", function () {
   game.newGame();
 });
-elements.btnChangeTheme.addEventListener("click", function() {changeTheme();})
-
-function changeTheme() {
-  let linkTheme = document.getElementById("linkTheme")
-  let iconTheme = document.getElementById("iconTheme")
-
-  let lightTheme = "src/lightTheme.css"
-  let darkTheme = "src/darkTheme.css"
-
-  currentTheme = linkTheme.getAttribute("href");
-
-  if (currentTheme == lightTheme) {
-    linkTheme.href = darkTheme;
-    iconTheme.innerText = "light_mode"
-  } else {
-    linkTheme.href = lightTheme;
-    iconTheme.innerText = "dark_mode"
-  }
-}
+elements.btnChangeTheme.addEventListener("click", function () { changeTheme(); })
 
 game.setStartNumbers = function () {
   for (let startCount = 0; startCount < 2; startCount++) {
@@ -154,28 +136,31 @@ function updateElements() {
 
 function moveNumbers(event) {
   arrow = event.key;
+  var moveResult;
 
   switch (arrow) {
     case "ArrowDown":
       saveLastData();
-      moveDown();
-      game.setNewNumber();
+      moveResult = moveDown();
       break;
     case "ArrowUp":
       saveLastData();
-      moveUp();
-      game.setNewNumber();
+      moveResult = moveUp();
       break;
     case "ArrowLeft":
       saveLastData();
-      moveLeft();
-      game.setNewNumber();
+      moveResult = moveLeft();
       break;
     case "ArrowRight":
       saveLastData();
-      moveRight();
-      game.setNewNumber();
+      moveResult = moveRight();
       break;
+  }
+
+  if (typeof moveResult != "undefined" && !equalArrays(moveResult, game.lastData)) {
+    game.Data = moveResult;
+    game.setNewNumber();
+    updateElements();
   }
 }
 
@@ -220,8 +205,7 @@ function moveLeft() {
     }
   }
 
-  game.Data = tilesArray;
-  updateElements();
+  return tilesArray;
 }
 
 function moveRight() {
@@ -265,8 +249,7 @@ function moveRight() {
     }
   }
 
-  game.Data = tilesArray;
-  updateElements();
+  return tilesArray;
 }
 
 function moveDown() {
@@ -314,8 +297,8 @@ function moveDown() {
     }
   }
 
-  game.Data = tilesArray.map((el, i) => el.map((el2, j) => tilesArray[j][i]));
-  updateElements();
+  var transposedTilesArray = tilesArray.map((el, i) => el.map((el2, j) => tilesArray[j][i]));
+  return transposedTilesArray;
 }
 
 function moveUp() {
@@ -363,12 +346,30 @@ function moveUp() {
     }
   }
 
-  game.Data = tilesArray.map((el, i) => el.map((el2, j) => tilesArray[j][i]));
-  updateElements();
+  var transposedTilesArray = tilesArray.map((el, i) => el.map((el2, j) => tilesArray[j][i]));
+  return transposedTilesArray;
 }
 
 function saveLastData() {
   game.lastData = game.Data;
+}
+
+function changeTheme() {
+  let linkTheme = document.getElementById("linkTheme")
+  let iconTheme = document.getElementById("iconTheme")
+
+  let lightTheme = "src/lightTheme.css"
+  let darkTheme = "src/darkTheme.css"
+
+  currentTheme = linkTheme.getAttribute("href");
+
+  if (currentTheme == lightTheme) {
+    linkTheme.href = darkTheme;
+    iconTheme.innerText = "light_mode"
+  } else {
+    linkTheme.href = lightTheme;
+    iconTheme.innerText = "dark_mode"
+  }
 }
 
 function removeClasses(classList) {
@@ -377,4 +378,15 @@ function removeClasses(classList) {
       classList.remove(className);
     }
   });
+}
+
+function equalArrays(a, b) {
+  for (let i = 0; i < a.length; i++) {
+    for (let j=0; j < a[i].length; j++) {
+      if (a[i][j] != b[i][j]) {
+        return false;
+      }
+    }
+  }
+  return true;
 }
