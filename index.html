@@ -1,62 +1,65 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>2048</title>
-    <link rel="stylesheet" type="text/css" href="src/style.css" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
-    />
-  </head>
 
-  <body id="game">
-    <div class="wrapper">
-      <div class="header">
-        <p>Score:</p>
-        <p id="score"></p>
-        <div class="controls">
-          <button class="styledButtonTheme" id="btnTheme">
-            <span class="material-symbols-outlined iconTheme"> dark_mode </span>
-          </button>
-          <button class="styledButton" id="btnUndo">
-            <span class="material-symbols-outlined iconControl"> undo </span>
-          </button>
-          <button class="styledButton" id="btnNewGame">
-            <span class="material-symbols-outlined iconControl"> cached </span>
-          </button>
-        </div>
-      </div>
+<head>
+  <title>2048</title>
+  <!-- styles -->
+  <link rel="stylesheet" type="text/css" href="src/style.css" />
+  <link id="linkTheme" rel="stylesheet" type="text/css" href="src/darkTheme.css" />
 
-      <div class="gamefield">
-        <div class="section" id="s1"></div>
-        <div class="section" id="s2"></div>
-        <div class="section" id="s3"></div>
-        <div class="section" id="s4"></div>
+  <!-- icons -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 
-        <div class="section" id="s5"></div>
-        <div class="section" id="s6"></div>
-        <div class="section" id="s7"></div>
-        <div class="section" id="s8"></div>
+</head>
 
-        <div class="section" id="s9"></div>
-        <div class="section" id="s10"></div>
-        <div class="section" id="s11"></div>
-        <div class="section" id="s12"></div>
-
-        <div class="section" id="s13"></div>
-        <div class="section" id="s14"></div>
-        <div class="section" id="s15"></div>
-        <div class="section" id="s16"></div>
+<body id="game">
+  <div class="wrapper">
+    <div class="header">
+      <p>Score:</p>
+      <p id="score"></p>
+      <div class="controls">
+        <button class="styledButtonTheme" id="btnTheme">
+          <span id="iconTheme" class="material-symbols-outlined iconTheme"> light_mode </span>
+        </button>
+        <button class="styledButton" id="btnUndo">
+          <span class="material-symbols-outlined iconControl"> undo </span>
+        </button>
+        <button class="styledButton" id="btnNewGame">
+          <span class="material-symbols-outlined iconControl"> cached </span>
+        </button>
       </div>
     </div>
-    <script src="src/script.js"></script>
-  </body>
+
+    <div class="gamefield">
+      <div class="section" id="s1"></div>
+      <div class="section" id="s2"></div>
+      <div class="section" id="s3"></div>
+      <div class="section" id="s4"></div>
+
+      <div class="section" id="s5"></div>
+      <div class="section" id="s6"></div>
+      <div class="section" id="s7"></div>
+      <div class="section" id="s8"></div>
+
+      <div class="section" id="s9"></div>
+      <div class="section" id="s10"></div>
+      <div class="section" id="s11"></div>
+      <div class="section" id="s12"></div>
+
+      <div class="section" id="s13"></div>
+      <div class="section" id="s14"></div>
+      <div class="section" id="s15"></div>
+      <div class="section" id="s16"></div>
+    </div>
+  </div>
+  <script src="src/script.js"></script>
+</body>
+
 </html>

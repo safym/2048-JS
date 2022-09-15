@@ -20,6 +20,7 @@ var elements = {
   score: document.getElementById("score"),
   btnUndo: document.getElementById("btnUndo"),
   btnNewGame: document.getElementById("btnNewGame"),
+  btnChangeTheme: document.getElementById("btnTheme"),
   array: [
     [this.s1, this.s2, this.s3, this.s4],
     [this.s5, this.s6, this.s7, this.s8],
@@ -70,6 +71,25 @@ elements.btnUndo.addEventListener("click", function () {
 elements.btnNewGame.addEventListener("click", function () {
   game.newGame();
 });
+elements.btnChangeTheme.addEventListener("click", function() {changeTheme();})
+
+function changeTheme() {
+  let linkTheme = document.getElementById("linkTheme")
+  let iconTheme = document.getElementById("iconTheme")
+
+  let lightTheme = "src/lightTheme.css"
+  let darkTheme = "src/darkTheme.css"
+
+  currentTheme = linkTheme.getAttribute("href");
+
+  if (currentTheme == lightTheme) {
+    linkTheme.href = darkTheme;
+    iconTheme.innerText = "light_mode"
+  } else {
+    linkTheme.href = lightTheme;
+    iconTheme.innerText = "dark_mode"
+  }
+}
 
 game.setStartNumbers = function () {
   for (let startCount = 0; startCount < 2; startCount++) {

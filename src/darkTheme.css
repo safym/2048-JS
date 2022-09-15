@@ -1,21 +1,26 @@
 :root {
-    --gamefield-color: rgb(243, 228, 255);
-    --section-color: rgb(246, 237, 253);
-    --main-text-color: rgb(58, 34, 80);
-    --button-active: rgb(189, 147, 223);
+    --body-background-color: #28222c;
+    --gamefield-color: rgb(77, 61, 88);
+    --section-color: rgb(98, 76, 112);
+    --button-color: rgb(205, 171, 232);
+    --button-active: rgb(136, 96, 168);
     --header-color: rgb(176, 130, 214);
 
-    --background-color-num2: #ffefcd;
-    --background-color-num4: #ffca8e;
-    --background-color-num8: #ee997d;
-    --background-color-num16: #e27287;
-    --background-color-num32: #cc7fd8;
-    --background-color-num64: #a169e9;
-    --background-color-num128: #6664da;
-    --background-color-num256: #5086cc;
-    --background-color-num512: #50afcc;
-    --background-color-num1024: #5ad8c7;
-    --background-color-num2048: #77e7a4;
+    --background-color-num2: #ffdd93;
+    --background-color-num4: #ffad4f;
+    --background-color-num8: #ec6639;
+    --background-color-num16: #c22c47;
+    --background-color-num32: #ad29c2;
+    --background-color-num64: #6d32bb;
+    --background-color-num128: #4542ce;
+    --background-color-num256: #1f57a1;
+    --background-color-num512: #1d7b97;
+    --background-color-num1024: #169282;
+    --background-color-num2048: #17ac53;
+}
+
+body {
+    background-color: var(--body-background-color);
 }
 
 p {
@@ -28,7 +33,7 @@ p {
 
 .section {
     background-color: var(--section-color);
-    color: var(--main-text-color);
+    color: var(--body-background-color);
 }
 
 .styledButton {
@@ -38,7 +43,7 @@ p {
 
 .styledButtonTheme {
     border: 2px solid var(--header-color);
-    background-color: white;
+    background-color: var(--body-background-color);
 }
 
 .styledButton:active {
@@ -53,7 +58,7 @@ p {
     color: var(--header-color);
 }
 .iconControl{
-    color: white;
+    color: var(--body-background-color);
 }
 
 .num2 {

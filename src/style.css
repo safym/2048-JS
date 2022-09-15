@@ -1,26 +1,6 @@
-:root {
-    --gamefield-color: rgb(243, 228, 255);
-    --section-color: rgb(246, 237, 253);
-    --main-text-color: rgb(58, 34, 80);
-    --button-color: rgb(205, 171, 232);
-    --button-active: rgb(189, 147, 223);
-    --header-text-color: rgb(176, 130, 214);
-
-    --background-color-num2: #ffefcd;
-    --background-color-num4: #ffca8e;
-    --background-color-num8: #ee997d;
-    --background-color-num16: #e27287;
-    --background-color-num32: #cc7fd8;
-    --background-color-num64: #a169e9;
-    --background-color-num128: #6664da;
-    --background-color-num256: #5086cc;
-    --background-color-num512: #50afcc;
-    --background-color-num1024: #5ad8c7;
-    --background-color-num2048: #77e7a4;
-}
-
 * {
     box-sizing: border-box;
+    transition: 0.1s;
 }
 
 body {
@@ -35,7 +15,6 @@ p {
     margin: 0;
 
     font-size: 40px;
-    color: var(--header-text-color);
 }
 
 .wrapper {
@@ -80,7 +59,6 @@ p {
 
     padding: 10px;
     border-radius: 15px;
-    background-color: var(--gamefield-color);
 
     display: grid;
     grid-template-columns: repeat(4, 100px);
@@ -101,7 +79,6 @@ p {
     font-weight: bold;
 
     border-radius: 10px;
-    background-color: var(--section-color);
 }
 
 .styledButton,
@@ -119,20 +96,10 @@ p {
 
 .styledButton {
     border: 0;
-    background-color: var(--button-color);
 }
 
 .styledButtonTheme {
-    border: 2px solid var(--button-color);
     background-color: white;
-}
-
-.styledButton:active {
-    background-color: var(--button-active);
-}
-
-.styledButtonTheme:active {
-    background-color: var(--gamefield-color);
 }
 
 .iconTheme {
@@ -141,7 +108,6 @@ p {
     'wght' 1000,
     'GRAD' 0,
     'opsz' 48;
-    color: var(--button-color);
 }
 .iconControl{
     font-variation-settings:
@@ -149,47 +115,6 @@ p {
     'wght' 1000,
     'GRAD' 0,
     'opsz' 48;
-    color: white;
-}
-
-@keyframes anim {
-    0% {width: 0px; height: 0px;}
-    0% {width: 100px; height: 100px;}
-}
-
-.num2 {
-    background-color: var(--background-color-num2);
-    animation: anim 0.5s;
-}
-.num4 {
-    background-color: var(--background-color-num4);
-}
-.num8 {
-    background-color: var(--background-color-num8);
-}
-.num16 {
-    background-color: var(--background-color-num16);
-}
-.num32 {
-    background-color: var(--background-color-num32);
-}
-.num64 {
-    background-color: var(--background-color-num64);
-}
-.num128 {
-    background-color: var(--background-color-num128);
-}
-.num256 {
-    background-color: var(--background-color-num256);
-}
-.num512 {
-    background-color: var(--background-color-num512);
-}
-.num1024 {
-    background-color: var(--background-color-num1024);
-}
-.num2048 {
-    background-color: var(--background-color-num2048);
 }
 
 #s1 { grid-area: 1 / 1 / 2 / 2; }
