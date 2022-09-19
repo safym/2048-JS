@@ -17,6 +17,7 @@ var elements = {
   s14: document.getElementById("s14"),
   s15: document.getElementById("s15"),
   s16: document.getElementById("s16"),
+  infoWinLose: document.getElementById("infoWinLose"),
   score: document.getElementById("score"),
   btnUndo: document.getElementById("btnUndo"),
   btnNewGame: document.getElementById("btnNewGame"),
@@ -114,6 +115,9 @@ function hasEmptySection() {
 
 function updateElements() {
   elements.score.innerText = game.score;
+  if (elements.infoWinLose.innerText == "You lose!") {
+    elements.infoWinLose.innerText = "\u0000";
+  }
 
   for (let i = 0; i < arraySize; i++) {
     for (let j = 0; j < arraySize; j++) {
@@ -162,6 +166,8 @@ function moveNumbers(event) {
     game.setNewNumber();
     updateElements();
   }
+
+  checkWin()
 }
 
 function moveLeft() {
@@ -350,6 +356,30 @@ function moveUp() {
   return transposedTilesArray;
 }
 
+function checkWin() {
+  if (has2048()) {
+    elements.infoWinLose.innerText = "You win!";
+  } else {
+    if (equalArrays(moveDown(), moveUp()) &&
+      equalArrays(moveLeft(), moveRight()) &&
+      equalArrays(moveDown(), moveLeft()) &&
+      equalArrays(moveUp(), moveRight())) {
+      elements.infoWinLose.innerText = "You lose!";
+    }
+  }
+}
+
+function has2048() {
+  for (let i = 0; i < game.Data.length; i++) {
+    for (let j = 0; j < game.Data[i].length; j++) {
+      if (game.Data[i][j] == 2048) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
 function saveLastData() {
   game.lastData = game.Data;
 }
@@ -382,7 +412,7 @@ function removeClasses(classList) {
 
 function equalArrays(a, b) {
   for (let i = 0; i < a.length; i++) {
-    for (let j=0; j < a[i].length; j++) {
+    for (let j = 0; j < a[i].length; j++) {
       if (a[i][j] != b[i][j]) {
         return false;
       }

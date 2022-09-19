@@ -5,6 +5,7 @@
     --button-color: rgb(205, 171, 232);
     --button-active: rgb(136, 96, 168);
     --header-color: rgb(176, 130, 214);
+    --color-win-lose: #ffdd93;
 
     --background-color-num2: #ffdd93;
     --background-color-num4: #ffad4f;
@@ -21,6 +22,10 @@
 
 body {
     background-color: var(--body-background-color);
+}
+
+h1 {
+    color: var(--color-win-lose);
 }
 
 p {

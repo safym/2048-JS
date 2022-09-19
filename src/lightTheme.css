@@ -1,9 +1,10 @@
 :root {
-    --gamefield-color: rgb(243, 228, 255);
-    --section-color: rgb(246, 237, 253);
+    --gamefield-color: rgb(222, 199, 241);
+    --section-color: rgb(238, 221, 252);
     --main-text-color: rgb(58, 34, 80);
     --button-active: rgb(189, 147, 223);
     --header-color: rgb(176, 130, 214);
+    --color-win-lose: #ffbe33;
 
     --background-color-num2: #ffefcd;
     --background-color-num4: #ffca8e;
@@ -16,6 +17,10 @@
     --background-color-num512: #50afcc;
     --background-color-num1024: #5ad8c7;
     --background-color-num2048: #77e7a4;
+}
+
+h1 {
+    color: var(--color-win-lose);
 }
 
 p {
