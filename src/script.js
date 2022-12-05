@@ -1,6 +1,8 @@
+"use strict"
+
 const arraySize = 4;
 
-var elements = {
+const elements = {
   s1: document.getElementById("s1"),
   s2: document.getElementById("s2"),
   s3: document.getElementById("s3"),
@@ -30,7 +32,7 @@ var elements = {
   ],
 };
 
-var game = {
+const game = {
   score: 0,
   lastScore: 0,
   Data: [
@@ -47,10 +49,11 @@ var game = {
   ],
   undo() {
     game.Data = game.lastData;
+    game.score = this.lastScore;
     updateElements();
   },
   newGame() {
-    var initialArray = [
+    let initialArray = [
       [0, 0, 0, 0],
       [0, 0, 0, 0],
       [0, 0, 0, 0],
@@ -82,8 +85,8 @@ game.setStartNumbers = function () {
 };
 
 game.setNewNumber = function () {
-  var iRandom = Math.floor(Math.random() * arraySize);
-  var jRandom = Math.floor(Math.random() * arraySize);
+  let iRandom = Math.floor(Math.random() * arraySize);
+  let jRandom = Math.floor(Math.random() * arraySize);
 
   if (hasEmptySection()) {
     if (game.Data[iRandom][jRandom] == 0) {
@@ -103,8 +106,8 @@ game.setNewNumber = function () {
 game.setStartNumbers();
 
 function hasEmptySection() {
-  for (var i = 0; i < arraySize; i++) {
-    for (var j = 0; j < arraySize; j++) {
+  for (let i = 0; i < arraySize; i++) {
+    for (let j = 0; j < arraySize; j++) {
       if (game.Data[i][j] == 0) {
         return true;
       }
@@ -139,8 +142,8 @@ function updateElements() {
 }
 
 function moveNumbers(event) {
-  arrow = event.key;
-  var moveResult;
+  let arrow = event.key;
+  let moveResult;
 
   switch (arrow) {
     case "ArrowDown":
@@ -171,11 +174,11 @@ function moveNumbers(event) {
 }
 
 function moveLeft() {
-  var tilesArray = [];
+  let tilesArray = [];
 
   //  delete empty tiles
   for (let i = 0; i < arraySize; i++) {
-    var tilesRow = game.Data[i].filter(function (number) {
+    let tilesRow = game.Data[i].filter(function (number) {
       return number != 0;
     });
     tilesArray.push(tilesRow);
@@ -191,7 +194,7 @@ function moveLeft() {
         tilesArray[i][j] = tilesArray[i][j] + tilesArray[i][j + 1];
         tilesArray[i][j + 1] = 0;
 
-        game.score = game.score + tilesArray[i][j];
+        game.score += tilesArray[i][j];
       }
     }
   }
@@ -199,7 +202,7 @@ function moveLeft() {
   //move left
   for (let i = 0; i < arraySize; i++) {
     //  delete empty tiles 2
-    var tilesRow = tilesArray[i].filter(function (number) {
+    let tilesRow = tilesArray[i].filter(function (number) {
       return number != 0;
     });
     tilesArray[i] = tilesRow;
@@ -215,11 +218,11 @@ function moveLeft() {
 }
 
 function moveRight() {
-  var tilesArray = [];
+  let tilesArray = [];
 
   //  delete empty tiles
   for (let i = 0; i < arraySize; i++) {
-    var tilesRow = game.Data[i].filter(function (number) {
+    let tilesRow = game.Data[i].filter(function (number) {
       return number != 0;
     });
     tilesArray.push(tilesRow);
@@ -235,7 +238,7 @@ function moveRight() {
         tilesArray[i][j] = tilesArray[i][j] + tilesArray[i][j - 1];
         tilesArray[i][j - 1] = 0;
 
-        game.score = game.score + tilesArray[i][j];
+        game.score += tilesArray[i][j];
       }
     }
   }
@@ -243,7 +246,7 @@ function moveRight() {
   //move right
   for (let i = 0; i < arraySize; i++) {
     //  delete empty tiles 2
-    var tilesRow = tilesArray[i].filter(function (number) {
+    let tilesRow = tilesArray[i].filter(function (number) {
       return number != 0;
     });
     tilesArray[i] = tilesRow;
@@ -259,15 +262,15 @@ function moveRight() {
 }
 
 function moveDown() {
-  var transposeData = game.Data.map((el, i) =>
+  let transposeData = game.Data.map((el, i) =>
     el.map((el2, j) => game.Data[j][i])
   );
 
-  var tilesArray = [];
+  let tilesArray = [];
 
   //  delete empty tiles
   for (let i = 0; i < arraySize; i++) {
-    var tilesRow = transposeData[i].filter(function (number) {
+    let tilesRow = transposeData[i].filter(function (number) {
       return number != 0;
     });
     tilesArray.push(tilesRow);
@@ -283,7 +286,7 @@ function moveDown() {
         tilesArray[i][j] = tilesArray[i][j] + tilesArray[i][j - 1];
         tilesArray[i][j - 1] = 0;
 
-        game.score = game.score + tilesArray[i][j];
+        game.score += tilesArray[i][j];
       }
     }
   }
@@ -291,7 +294,7 @@ function moveDown() {
   //move down (for transposed array: move right)
   for (let i = 0; i < arraySize; i++) {
     //  delete empty tiles 2
-    var tilesRow = tilesArray[i].filter(function (number) {
+    let tilesRow = tilesArray[i].filter(function (number) {
       return number != 0;
     });
     tilesArray[i] = tilesRow;
@@ -303,20 +306,20 @@ function moveDown() {
     }
   }
 
-  var transposedTilesArray = tilesArray.map((el, i) => el.map((el2, j) => tilesArray[j][i]));
+  let transposedTilesArray = tilesArray.map((el, i) => el.map((el2, j) => tilesArray[j][i]));
   return transposedTilesArray;
 }
 
 function moveUp() {
-  var transposeData = game.Data.map((el, i) =>
+  let transposeData = game.Data.map((el, i) =>
     el.map((el2, j) => game.Data[j][i])
   );
 
-  var tilesArray = [];
+  let tilesArray = [];
 
   //  delete empty tiles
   for (let i = 0; i < arraySize; i++) {
-    var tilesRow = transposeData[i].filter(function (number) {
+    let tilesRow = transposeData[i].filter(function (number) {
       return number != 0;
     });
     tilesArray.push(tilesRow);
@@ -332,7 +335,7 @@ function moveUp() {
         tilesArray[i][j] = tilesArray[i][j] + tilesArray[i][j + 1];
         tilesArray[i][j + 1] = 0;
 
-        game.score = game.score + tilesArray[i][j];
+        game.score += tilesArray[i][j];
       }
     }
   }
@@ -340,7 +343,7 @@ function moveUp() {
   //move up (for transposed array: move left)
   for (let i = 0; i < arraySize; i++) {
     //  delete empty tiles 2
-    var tilesRow = tilesArray[i].filter(function (number) {
+    let tilesRow = tilesArray[i].filter(function (number) {
       return number != 0;
     });
     tilesArray[i] = tilesRow;
@@ -352,7 +355,7 @@ function moveUp() {
     }
   }
 
-  var transposedTilesArray = tilesArray.map((el, i) => el.map((el2, j) => tilesArray[j][i]));
+  let transposedTilesArray = tilesArray.map((el, i) => el.map((el2, j) => tilesArray[j][i]));
   return transposedTilesArray;
 }
 
@@ -382,6 +385,7 @@ function has2048() {
 
 function saveLastData() {
   game.lastData = game.Data;
+  game.lastScore = game.score;
 }
 
 function changeTheme() {
@@ -391,7 +395,7 @@ function changeTheme() {
   let lightTheme = "src/lightTheme.css"
   let darkTheme = "src/darkTheme.css"
 
-  currentTheme = linkTheme.getAttribute("href");
+  let currentTheme = linkTheme.getAttribute("href");
 
   if (currentTheme == lightTheme) {
     linkTheme.href = darkTheme;
